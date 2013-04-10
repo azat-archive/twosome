@@ -1,0 +1,3 @@
+[submodule "src/third_party/boostasiosctp"]
+	path = src/third_party/boostasiosctp
+	url = git://github.com/azat/boostasiosctp.git
