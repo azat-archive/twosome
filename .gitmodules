@@ -1,3 +1,6 @@
 [submodule "src/third_party/boostasiosctp"]
 	path = src/third_party/boostasiosctp
 	url = git://github.com/azat/boostasiosctp.git
+[submodule "cmake"]
+	path = cmake
+	url = git://github.com/azat/cmake-external.git
