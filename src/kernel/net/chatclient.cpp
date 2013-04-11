@@ -94,6 +94,6 @@ void ChatClient::handleWrite(const boost::system::error_code& error)
 
     boost::asio::async_write(m_socket,
                              boost::asio::buffer(m_writeBuffer, Session::MAX_BUFFER_LENGTH),
-                             std::bind(&ChatClient::handleWrite, this,
+                             std::bind(&ChatClient::handleRead, this,
                                        PlaceHolders::_1));
 }
