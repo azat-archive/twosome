@@ -15,7 +15,8 @@
 
 #include <boost/asio/io_service.hpp>
 #include <boost/asio_sctp/ip/sctp.hpp>
-#include <boost/enable_shared_from_this.hpp>
+
+#include <memory>
 #include <string>
 
 
@@ -24,7 +25,7 @@
  */
 class Session
     : public Participant
-    , public boost::enable_shared_from_this<Session>
+    , public std::enable_shared_from_this<Session>
 {
 public:
     enum Constants

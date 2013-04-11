@@ -11,7 +11,7 @@
 #pragma once
 
 #include <string>
-#include <boost/shared_ptr.hpp>
+#include <memory>
 #include <boost/noncopyable.hpp>
 
 
@@ -26,4 +26,4 @@ public:
  * Write wrapper for std::shared_ptr and shared_from_this(),
  * and avoid using boost::shared_ptr()
  */
-typedef boost::shared_ptr<Participant> ParticipantPtr;
+typedef std::shared_ptr<Participant> ParticipantPtr;
