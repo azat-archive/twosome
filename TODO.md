@@ -1,3 +1,3 @@
 
-- Add master-slave architecture
+- Add master-slave{s} architecture
 - Add multi-master architecture
