@@ -67,4 +67,6 @@ private:
     void connectAsyncNext(boost::asio_sctp::ip::sctp::resolver_iterator endpoint_iterator);
     void handleRead(const boost::system::error_code& error);
     void handleWrite(const boost::system::error_code& error);
+
+    void asyncRead();
 };

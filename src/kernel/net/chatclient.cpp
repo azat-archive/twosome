@@ -58,10 +58,7 @@ void ChatClient::handleConnect(const boost::system::error_code& error,
         return;
     }
 
-    boost::asio::async_read(m_socket,
-                            boost::asio::buffer(m_readBuffer, Session::MAX_BUFFER_LENGTH),
-                            std::bind(&ChatClient::handleRead, this,
-                                      PlaceHolders::_1));
+    asyncRead();
 }
 
 void ChatClient::connectAsyncNext(Sctp::ip::sctp::resolver_iterator iterator)
@@ -80,8 +77,11 @@ void ChatClient::handleRead(const boost::system::error_code& error)
     }
 
     writeOutputPrompt();
-    std::cout << m_readBuffer
+    std::cout << '\r' << m_readBuffer
               << std::endl << std::flush;
+    writeInputPrompt();
+
+    asyncRead();
 }
 
 void ChatClient::handleWrite(const boost::system::error_code& error)
@@ -96,4 +96,12 @@ void ChatClient::handleWrite(const boost::system::error_code& error)
                              boost::asio::buffer(m_writeBuffer, Session::MAX_BUFFER_LENGTH),
                              std::bind(&ChatClient::handleRead, this,
                                        PlaceHolders::_1));
+}
+
+void ChatClient::asyncRead()
+{
+    boost::asio::async_read(m_socket,
+                            boost::asio::buffer(m_readBuffer, Session::MAX_BUFFER_LENGTH),
+                            std::bind(&ChatClient::handleRead, this,
+                                      PlaceHolders::_1));
 }
