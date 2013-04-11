@@ -17,6 +17,8 @@
 
 #include <boost/asio/io_service.hpp>
 #include <boost/asio/ip/tcp.hpp>
+#include <boost/asio/streambuf.hpp>
+#include <boost/asio/posix/stream_descriptor.hpp>
 #include <boost/asio_sctp/ip/sctp.hpp>
 
 #include <boost/noncopyable.hpp>
@@ -58,6 +60,10 @@ private:
     Options m_options;
     char m_buffer[Session::MAX_BUFFER_LENGTH];
 
+    boost::asio::streambuf m_inputBuffer;
+    boost::asio::posix::stream_descriptor m_input;
+    boost::asio::posix::stream_descriptor m_output;
+
     boost::asio::io_service &m_ioService;
     boost::asio_sctp::ip::sctp::socket m_socket;
 
@@ -65,8 +71,10 @@ private:
                        boost::asio_sctp::ip::sctp::resolver_iterator endpoint_iterator);
     void connectAsyncNext(boost::asio_sctp::ip::sctp::resolver_iterator endpoint_iterator);
     void handleRead(const boost::system::error_code& error);
+    void handleReadInput(const boost::system::error_code& error, size_t length);
     void handleWrite(const boost::system::error_code& error);
 
     void asyncRead();
+    void asyncReadFromStdin();
     void asyncWrite(const std::string& message);
 };

@@ -15,9 +15,9 @@ include(AddFilesGlobRecursiveToList)
 
 message(STATUS "Making ${PROJECT_NAME} on ${CMAKE_SYSTEM_NAME} ${CMAKE_SYSTEM_PROCESSOR}")
 
-find_package(Boost REQUIRED COMPONENTS thread log system)
+find_package(Boost REQUIRED COMPONENTS log system)
 
-FindLibrariesOrFatalError("boost_thread boost_log boost_system sctp")
+FindLibrariesOrFatalError("boost_log boost_system sctp")
 
 # The version number.
 set(twosome_VERSION_MAJOR 0)

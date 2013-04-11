@@ -9,7 +9,6 @@
  */
 
 
-#include <boost/thread.hpp>
 #include <functional>
 
 #include "kernel/net/chatclient.h"
@@ -24,19 +23,7 @@ int main(int argc __attribute__((unused)), char **argv __attribute__((unused)))
 
     boost::asio::io_service ioService;
     ChatClient client(ChatClient::Options("8765"), ioService);
-
-    // TODO: Replace by std::bind()
-    boost::thread clientThread(boost::bind(&boost::asio::io_service::run,
-                                           &ioService));
-
-    char message[Session::MAX_BUFFER_LENGTH];
-    while (ChatClient::writeInputPrompt()
-           && std::cin.getline(message, Session::MAX_BUFFER_LENGTH + 1)) {
-        client.send(message);
-    }
-
-    client.close();
-    clientThread.join();
+    ioService.run();
 
     return EXIT_SUCCESS;
 }

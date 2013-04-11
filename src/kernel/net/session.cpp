@@ -72,6 +72,4 @@ void Session::handleWrite(const boost::system::error_code& error)
         m_room.leave(shared_from_this());
         return;
     }
-
-    asyncRead();
 }
