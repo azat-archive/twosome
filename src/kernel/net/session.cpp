@@ -48,7 +48,7 @@ void Session::asyncRead()
 
 void Session::asyncWrite(const std::string& message)
 {
-    LOG(debug) << "Session::asyncWrite()";
+    LOG(debug) << "Session::asyncWrite() " << message;
     Asio::async_write(m_socket,
                       Asio::buffer(message),
                       std::bind(&Session::handleWrite, shared_from_this(),
