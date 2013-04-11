@@ -45,6 +45,7 @@ public:
 
 private:
     Options m_options;
+    Room m_room;
 
     boost::asio::io_service m_socket;
     std::unique_ptr<boost::asio_sctp::ip::sctp::acceptor> m_acceptor;

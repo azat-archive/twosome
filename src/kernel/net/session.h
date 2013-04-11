@@ -33,7 +33,7 @@ public:
         MAX_BUFFER_LENGTH = 1 << 10 /* 1024 */
     };
 
-    Session(boost::asio::io_service& socket);
+    Session(boost::asio::io_service& socket, Room &room);
 
     void start();
     virtual void deliver(const std::string& message);
@@ -47,7 +47,7 @@ public:
 private:
     boost::asio_sctp::ip::sctp::socket m_socket;
     char m_buffer[MAX_BUFFER_LENGTH];
-    Room m_room;
+    Room &m_room;
 
     void asyncRead();
     void asyncWrite(const std::string& message);

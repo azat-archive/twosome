@@ -20,8 +20,9 @@ namespace PlaceHolders = std::placeholders;
 namespace Asio = boost::asio;
 
 
-Session::Session(boost::asio::io_service& socket)
+Session::Session(boost::asio::io_service& socket, Room &room)
     : m_socket(socket)
+    , m_room(room)
 {
 }
 

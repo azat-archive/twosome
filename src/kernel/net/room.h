@@ -27,6 +27,7 @@ public:
 
     void join(ParticipantPtr participant)
     {
+        LOG(info) << "Add participant, already connected " << m_participants.size();
         m_participants.insert(participant);
     }
 

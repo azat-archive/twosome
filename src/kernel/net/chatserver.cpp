@@ -39,7 +39,7 @@ void ChatServer::start()
 
 void ChatServer::startAccept()
 {
-    SessionPtr newSession(new Session(m_socket));
+    SessionPtr newSession(new Session(m_socket, m_room));
     m_acceptor->async_accept(newSession->socket(),
                              std::bind(&ChatServer::handleAccept,
                                        this,
