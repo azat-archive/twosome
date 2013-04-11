@@ -36,10 +36,7 @@ ChatClient::ChatClient(const Options &options, boost::asio::io_service &ioServic
 
 void ChatClient::send(const std::string& message)
 {
-    boost::asio::async_write(m_socket,
-                             boost::asio::buffer(message.c_str(), message.size()),
-                             std::bind(&ChatClient::handleWrite, this,
-                                       PlaceHolders::_1));
+    asyncWrite(message);
 }
 
 void ChatClient::close()
@@ -77,7 +74,7 @@ void ChatClient::handleRead(const boost::system::error_code& error)
     }
 
     writeOutputPrompt();
-    std::cout << '\r' << m_readBuffer
+    std::cout << '\r' << m_buffer
               << std::endl << std::flush;
     writeInputPrompt();
 
@@ -92,16 +89,21 @@ void ChatClient::handleWrite(const boost::system::error_code& error)
         return;
     }
 
-    boost::asio::async_write(m_socket,
-                             boost::asio::buffer(m_writeBuffer, Session::MAX_BUFFER_LENGTH),
-                             std::bind(&ChatClient::handleRead, this,
-                                       PlaceHolders::_1));
+    asyncWrite(m_buffer);
 }
 
 void ChatClient::asyncRead()
 {
     boost::asio::async_read(m_socket,
-                            boost::asio::buffer(m_readBuffer, Session::MAX_BUFFER_LENGTH),
+                            boost::asio::buffer(m_buffer, Session::MAX_BUFFER_LENGTH),
                             std::bind(&ChatClient::handleRead, this,
                                       PlaceHolders::_1));
+}
+
+void ChatClient::asyncWrite(const std::string& message)
+{
+    boost::asio::async_write(m_socket,
+                             boost::asio::buffer(message.c_str(), message.size()),
+                             std::bind(&ChatClient::handleWrite, this,
+                                       PlaceHolders::_1));
 }

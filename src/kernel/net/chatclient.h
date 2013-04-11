@@ -56,8 +56,7 @@ public:
 
 private:
     Options m_options;
-    char m_readBuffer[Session::MAX_BUFFER_LENGTH];
-    char m_writeBuffer[Session::MAX_BUFFER_LENGTH];
+    char m_buffer[Session::MAX_BUFFER_LENGTH];
 
     boost::asio::io_service &m_ioService;
     boost::asio_sctp::ip::sctp::socket m_socket;
@@ -69,4 +68,5 @@ private:
     void handleWrite(const boost::system::error_code& error);
 
     void asyncRead();
+    void asyncWrite(const std::string& message);
 };
