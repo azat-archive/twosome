@@ -16,7 +16,10 @@
 
 #include <boost/asio/io_service.hpp>
 #include <boost/asio/ip/tcp.hpp>
+#include <boost/asio_sctp/ip/sctp.hpp>
+
 #include <boost/noncopyable.hpp>
+#include <memory>
 
 /**
  * Async chat server
@@ -46,7 +49,7 @@ private:
     Options m_options;
 
     boost::asio::io_service m_socket;
-    boost::asio::ip::tcp::acceptor m_acceptor;
+    std::unique_ptr<boost::asio_sctp::ip::sctp::acceptor> m_acceptor;
 
     void startAccept();
     void handleAccept(Session* newSession, const boost::system::error_code& error);

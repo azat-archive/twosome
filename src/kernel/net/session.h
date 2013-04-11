@@ -11,7 +11,7 @@
 #pragma once
 
 #include <boost/asio/io_service.hpp>
-#include <boost/asio/ip/tcp.hpp>
+#include <boost/asio_sctp/ip/sctp.hpp>
 #include <boost/noncopyable.hpp>
 #include <string>
 
@@ -25,13 +25,13 @@ public:
 
     void start();
 
-    boost::asio::ip::tcp::socket& socket()
+    boost::asio_sctp::ip::sctp::socket& socket()
     {
         return m_socket;
     }
 
 private:
-    boost::asio::ip::tcp::socket m_socket;
+    boost::asio_sctp::ip::sctp::socket m_socket;
     /**
      * TODO: We can avoid this, by using buffers with std::string
      */

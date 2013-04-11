@@ -16,11 +16,16 @@
 
 namespace PlaceHolders = std::placeholders;
 namespace Ip = boost::asio::ip;
+namespace Sctp = boost::asio_sctp;
 
 ChatServer::ChatServer(const Options &options)
     : m_options(options)
-    , m_acceptor(m_socket, Ip::tcp::endpoint(Ip::tcp::v4(), options.port))
 {
+    const Ip::address address = Ip::address::from_string("0.0.0.0");
+    m_acceptor = std::unique_ptr<Sctp::ip::sctp::acceptor>(new Sctp::ip::sctp::acceptor(
+                                                           m_socket,
+                                                           Sctp::ip::sctp::endpoint(address,
+                                                                                    options.port)));
     startAccept();
 }
 
@@ -37,11 +42,11 @@ void ChatServer::start()
 void ChatServer::startAccept()
 {
     Session* newSession = new Session(m_socket);
-    m_acceptor.async_accept(newSession->socket(),
-                            std::bind(&ChatServer::handleAccept,
-                                      this,
-                                      newSession,
-                                      PlaceHolders::_1));
+    m_acceptor->async_accept(newSession->socket(),
+                             std::bind(&ChatServer::handleAccept,
+                                       this,
+                                       newSession,
+                                       PlaceHolders::_1));
 }
 
 void ChatServer::handleAccept(Session* newSession, const boost::system::error_code& error)
