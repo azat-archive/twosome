@@ -12,6 +12,7 @@
 
 
 #include "participant.h"
+#include "util/log.h"
 
 #include <boost/noncopyable.hpp>
 #include <set>
@@ -36,6 +37,7 @@ public:
 
     void deliver(const std::string& message)
     {
+        LOG(info) << "deliver";
         std::for_each(m_participants.begin(), m_participants.end(),
                       std::bind(&Participant::deliver,
                                 std::placeholders::_1,

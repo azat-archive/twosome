@@ -16,13 +16,6 @@
 #include "kernel/net/session.h"
 
 
-bool writePrompt()
-{
-    std::cout << "< " << std::flush;
-    return true;
-}
-
-
 int main(int argc __attribute__((unused)), char **argv __attribute__((unused)))
 {
     /**
@@ -37,7 +30,7 @@ int main(int argc __attribute__((unused)), char **argv __attribute__((unused)))
                                            &ioService));
 
     char message[Session::MAX_BUFFER_LENGTH];
-    while (writePrompt()
+    while (ChatClient::writeInputPrompt()
            && std::cin.getline(message, Session::MAX_BUFFER_LENGTH + 1)) {
         client.send(message);
     }

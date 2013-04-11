@@ -63,7 +63,6 @@ void Session::handleRead(const boost::system::error_code& error,
     }
 
     m_room.deliver(m_buffer);
-    asyncWrite(m_buffer);
 }
 
 void Session::handleWrite(const boost::system::error_code& error)

@@ -79,7 +79,9 @@ void ChatClient::handleRead(const boost::system::error_code& error)
         return;
     }
 
-    std::cout << m_readBuffer;
+    writeOutputPrompt();
+    std::cout << m_readBuffer
+              << std::endl << std::flush;
 }
 
 void ChatClient::handleWrite(const boost::system::error_code& error)

@@ -44,6 +44,16 @@ public:
     void send(const std::string& message);
     void close();
 
+    static bool writeInputPrompt()
+    {
+        std::cout << "< " << std::flush;
+        return true;
+    }
+    static void writeOutputPrompt()
+    {
+        std::cout << "> " << std::flush;
+    }
+
 private:
     Options m_options;
     char m_readBuffer[Session::MAX_BUFFER_LENGTH];
