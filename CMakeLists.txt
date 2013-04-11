@@ -17,7 +17,7 @@ message(STATUS "Making ${PROJECT_NAME} on ${CMAKE_SYSTEM_NAME} ${CMAKE_SYSTEM_PR
 
 find_package(Boost REQUIRED COMPONENTS program_options log system)
 
-FindLibrariesOrFatalError("boost_program_options boost_log boost_system")
+FindLibrariesOrFatalError("boost_program_options boost_log boost_system sctp")
 
 # The version number.
 set(twosome_VERSION_MAJOR 0)
@@ -28,6 +28,7 @@ set(TWOSOME_ROOT_DIR "${CMAKE_SOURCE_DIR}")
 set(TWOSOME_BINARY_DIR "${TWOSOME_ROOT_DIR}/build")
 set(TWOSOME_BUILD_DIR "${TWOSOME_ROOT_DIR}/build")
 set(TWOSOME_SOURCE_DIR "${TWOSOME_ROOT_DIR}/src")
+set(TWOSOME_THIRD_PARTY_SOURCE_DIR "${TWOSOME_ROOT_DIR}/src/third_party")
 set(TWOSOME_LIBRARY_DIR "${TWOSOME_ROOT_DIR}/lib")
 set(TWOSOME_EXECUTABLE_OUTPUT_PATH ${TWOSOME_BUILD_DIR} CACHE PATH "Build directory" FORCE)
 set(TWOSOME_LIBRARY_OUTPUT_PATH ${TWOSOME_BUILD_DIR} CACHE PATH "Build directory" FORCE)
@@ -35,6 +36,7 @@ set(TWOSOME_LIBRARY_OUTPUT_PATH ${TWOSOME_BUILD_DIR} CACHE PATH "Build directory
 # Include paths
 include_directories(${TWOSOME_SOURCE_DIR})
 include_directories(${TWOSOME_BINARY_DIR})
+include_directories("${TWOSOME_THIRD_PARTY_SOURCE_DIR}/boostasiosctp")
 
 AddCompilerFlags(FLAGS -Wall -Wextra -Werror -g -rdynamic LANGUAGES C CXX)
 AddCompilerFlags(FAIL_ON_ERROR FLAGS -std=c++11 LANGUAGES CXX)
