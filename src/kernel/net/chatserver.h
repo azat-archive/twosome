@@ -50,5 +50,5 @@ private:
     std::unique_ptr<boost::asio_sctp::ip::sctp::acceptor> m_acceptor;
 
     void startAccept();
-    void handleAccept(Session* newSession, const boost::system::error_code& error);
+    void handleAccept(SessionPtr newSession, const boost::system::error_code& error);
 };

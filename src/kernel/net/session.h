@@ -54,3 +54,5 @@ private:
     void handleRead(const boost::system::error_code& error, size_t bytesTransferred);
     void handleWrite(const boost::system::error_code& error);
 };
+
+typedef std::shared_ptr<Session> SessionPtr;
