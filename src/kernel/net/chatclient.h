@@ -52,7 +52,9 @@ private:
     boost::asio::io_service &m_ioService;
     boost::asio_sctp::ip::sctp::socket m_socket;
 
-    void handleConnect(const boost::system::error_code& error);
+    void handleConnect(const boost::system::error_code& error,
+                       boost::asio_sctp::ip::sctp::resolver_iterator endpoint_iterator);
+    void connectAsyncNext(boost::asio_sctp::ip::sctp::resolver_iterator endpoint_iterator);
     void handleRead(const boost::system::error_code& error);
     void handleWrite(const boost::system::error_code& error);
 };

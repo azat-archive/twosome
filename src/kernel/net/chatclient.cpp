@@ -30,13 +30,8 @@ ChatClient::ChatClient(const Options &options, boost::asio::io_service &ioServic
 {
     Sctp::ip::sctp::resolver resolver(ioService);
     Sctp::ip::sctp::resolver_query query(options.ip, options.port);
-    Sctp::ip::sctp::resolver_iterator iterator = resolver.resolve(query);
 
-    Sctp::ip::sctp::endpoint endPoint = *iterator;
-    m_socket.async_connect(endPoint,
-                           std::bind(&ChatClient::handleConnect,
-                                     this,
-                                     PlaceHolders::_1));
+    connectAsyncNext(resolver.resolve(query));
 }
 
 void ChatClient::send(const std::string& message)
@@ -53,11 +48,13 @@ void ChatClient::close()
     m_socket.close();
 }
 
-void ChatClient::handleConnect(const boost::system::error_code& error)
+void ChatClient::handleConnect(const boost::system::error_code& error,
+                               Sctp::ip::sctp::resolver_iterator iterator)
 {
     if (error) {
         LOG(info) << "Connect error";
         close();
+        connectAsyncNext(iterator);
         return;
     }
 
@@ -65,6 +62,13 @@ void ChatClient::handleConnect(const boost::system::error_code& error)
                             boost::asio::buffer(m_readBuffer, Session::MAX_BUFFER_LENGTH),
                             std::bind(&ChatClient::handleRead, this,
                                       PlaceHolders::_1));
+}
+
+void ChatClient::connectAsyncNext(Sctp::ip::sctp::resolver_iterator iterator)
+{
+    m_socket.async_connect(*iterator,
+                           std::bind(&ChatClient::handleConnect, this,
+                                      PlaceHolders::_1, ++iterator));
 }
 
 void ChatClient::handleRead(const boost::system::error_code& error)
