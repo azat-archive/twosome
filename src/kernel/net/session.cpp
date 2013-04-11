@@ -8,13 +8,16 @@
  * file that was distributed with this source code.
  */
 
+
 #include "session.h"
 
 #include <boost/asio/write.hpp>
 #include <functional>
 
+
 namespace PlaceHolders = std::placeholders;
 namespace Asio = boost::asio;
+
 
 Session::Session(boost::asio::io_service& socket)
     : m_socket(socket)
@@ -23,7 +26,13 @@ Session::Session(boost::asio::io_service& socket)
 
 void Session::start()
 {
+    m_room.join(shared_from_this());
     asyncRead();
+}
+
+void Session::deliver(const std::string& message)
+{
+    asyncWrite(message);
 }
 
 void Session::asyncRead()
@@ -46,17 +55,18 @@ void Session::handleRead(const boost::system::error_code& error,
                          size_t bytesTransferred __attribute__((unused)))
 {
     if (error) {
-        delete this;
+        m_room.leave(shared_from_this());
         return;
     }
 
+    m_room.deliver(m_buffer);
     asyncWrite(m_buffer);
 }
 
 void Session::handleWrite(const boost::system::error_code& error)
 {
     if (error) {
-        delete this;
+        m_room.leave(shared_from_this());
         return;
     }
 

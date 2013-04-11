@@ -14,9 +14,11 @@
 
 #include <functional>
 
+
 namespace PlaceHolders = std::placeholders;
 namespace Ip = boost::asio::ip;
 namespace Sctp = boost::asio_sctp;
+
 
 ChatServer::ChatServer(const Options &options)
     : m_options(options)
@@ -27,10 +29,6 @@ ChatServer::ChatServer(const Options &options)
                                                            Sctp::ip::sctp::endpoint(address,
                                                                                     options.port)));
     startAccept();
-}
-
-ChatServer::~ChatServer()
-{
 }
 
 void ChatServer::start()

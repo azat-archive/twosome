@@ -10,6 +10,7 @@
 
 #pragma once
 
+
 #include "session.h"
 
 #include <string>
@@ -19,12 +20,10 @@
 #include <boost/asio_sctp/ip/sctp.hpp>
 
 #include <boost/noncopyable.hpp>
-#include <memory>
+
 
 /**
  * Async chat server
- *
- * TODO: singleton
  */
 class ChatServer : boost::noncopyable
 {
@@ -41,7 +40,6 @@ public:
     };
 
     ChatServer(const Options &options);
-    virtual ~ChatServer();
 
     void start();
 

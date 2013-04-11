@@ -15,9 +15,9 @@ include(AddFilesGlobRecursiveToList)
 
 message(STATUS "Making ${PROJECT_NAME} on ${CMAKE_SYSTEM_NAME} ${CMAKE_SYSTEM_PROCESSOR}")
 
-find_package(Boost REQUIRED COMPONENTS program_options log system)
+find_package(Boost REQUIRED COMPONENTS thread log system)
 
-FindLibrariesOrFatalError("boost_program_options boost_log boost_system sctp")
+FindLibrariesOrFatalError("boost_thread boost_log boost_system sctp")
 
 # The version number.
 set(twosome_VERSION_MAJOR 0)
@@ -58,3 +58,9 @@ file(GLOB_RECURSE TWOSOME_SERVER_SOURCES "${TWOSOME_SOURCE_DIR}/server/*.cpp")
 list(APPEND TWOSOME_SERVER_SOURCES ${TWOSOME_SOURCES})
 add_executable(twosomed ${TWOSOME_SERVER_SOURCES})
 target_link_libraries(twosomed ${LIBS})
+
+# twosome client
+file(GLOB_RECURSE TWOSOME_CLIENT_SOURCES "${TWOSOME_SOURCE_DIR}/client/*.cpp")
+list(APPEND TWOSOME_CLIENT_SOURCES ${TWOSOME_SOURCES})
+add_executable(twosome ${TWOSOME_CLIENT_SOURCES})
+target_link_libraries(twosome ${LIBS})

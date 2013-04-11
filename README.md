@@ -13,3 +13,4 @@ See also
 ----------
 
 - http://www.boost.org/doc/libs/1_45_0/doc/html/boost_asio/example/chat
+  (Based on this example)
