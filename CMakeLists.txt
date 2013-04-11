@@ -42,10 +42,6 @@ AddCompilerFlags(FLAGS -Wall -Wextra -Werror -g -rdynamic LANGUAGES C CXX)
 AddCompilerFlags(FAIL_ON_ERROR FLAGS -std=c++11 LANGUAGES CXX)
 add_definitions(-D_REENTRANT -DTHREAD_SAFE -D_GNU_SOURCE -DDEBUG)
 
-# twosome sources
-AddFilesGlobRecursiveToList(TWOSOME_SOURCES "${TWOSOME_SOURCE_DIR}/kernel/*.cpp")
-AddFilesGlobRecursiveToList(TWOSOME_SOURCES "${TWOSOME_SOURCE_DIR}/util/*.cpp")
-
 # configure a header file to pass some of the CMake settings
 # to the source code
 configure_file(
@@ -54,13 +50,16 @@ configure_file(
 )
 
 # twosome server
-file(GLOB_RECURSE TWOSOME_SERVER_SOURCES "${TWOSOME_SOURCE_DIR}/server/*.cpp")
-list(APPEND TWOSOME_SERVER_SOURCES ${TWOSOME_SOURCES})
+set(TWOSOME_SERVER_SOURCES
+    "${TWOSOME_SOURCE_DIR}/kernel/net/chatserver.cpp"
+    "${TWOSOME_SOURCE_DIR}/kernel/net/session.cpp"
+    "${TWOSOME_SOURCE_DIR}/server/twosomed.cpp")
 add_executable(twosomed ${TWOSOME_SERVER_SOURCES})
 target_link_libraries(twosomed ${LIBS})
 
 # twosome client
-file(GLOB_RECURSE TWOSOME_CLIENT_SOURCES "${TWOSOME_SOURCE_DIR}/client/*.cpp")
-list(APPEND TWOSOME_CLIENT_SOURCES ${TWOSOME_SOURCES})
+set(TWOSOME_CLIENT_SOURCES
+    "${TWOSOME_SOURCE_DIR}/kernel/net/chatclient.cpp"
+    "${TWOSOME_SOURCE_DIR}/client/twosome.cpp")
 add_executable(twosome ${TWOSOME_CLIENT_SOURCES})
 target_link_libraries(twosome ${LIBS})
