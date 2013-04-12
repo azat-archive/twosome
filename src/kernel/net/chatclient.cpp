@@ -33,6 +33,8 @@ ChatClient::ChatClient(const Options &options, boost::asio::io_service &ioServic
     , m_ioService(ioService)
     , m_socket(ioService)
 {
+    memset(m_buffer, 0, Session::MAX_BUFFER_LENGTH);
+
     Sctp::ip::sctp::resolver resolver(ioService);
     Sctp::ip::sctp::resolver_query query(options.ip, options.port);
 
