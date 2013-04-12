@@ -86,7 +86,8 @@ void ChatClient::handleRead(const boost::system::error_code& error,
 
     m_messageBuffer.sgetn(m_buffer, length);
     writeOutputPrompt();
-    std::cout << m_buffer << std::endl << std::flush;
+    std::cout << m_buffer << std::flush;
+    writeInputPrompt();
 
     asyncRead();
 }

@@ -53,7 +53,7 @@ public:
     }
     static void writeOutputPrompt()
     {
-        std::cout << "> " << std::flush;
+        std::cout << "\r" << std::flush << "> " << std::flush;
     }
 
 private:
