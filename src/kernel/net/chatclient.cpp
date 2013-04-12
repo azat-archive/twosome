@@ -55,7 +55,6 @@ void ChatClient::close()
 void ChatClient::handleConnect(const boost::system::error_code& error,
                                Sctp::ip::sctp::resolver_iterator iterator)
 {
-    LOG(info) << "ChatClient::handleConnect";
     if (error) {
         LOG(info) << "Connect error";
         close();
@@ -77,7 +76,6 @@ void ChatClient::connectAsyncNext(Sctp::ip::sctp::resolver_iterator iterator)
 void ChatClient::handleRead(const boost::system::error_code& error,
                             size_t length)
 {
-    LOG(info) << "ChatClient::handleRead";
     if (error) {
         LOG(info) << "Read error";
         close();
@@ -94,7 +92,6 @@ void ChatClient::handleRead(const boost::system::error_code& error,
 void ChatClient::handleReadInput(const boost::system::error_code& error,
                                  size_t length)
 {
-    LOG(info) << "ChatClient::handleReadInput";
     if (error) {
         close();
         return;
@@ -106,7 +103,6 @@ void ChatClient::handleReadInput(const boost::system::error_code& error,
 
 void ChatClient::handleWrite(const boost::system::error_code& error)
 {
-    LOG(info) << "ChatClient::handleWrite";
     if (error) {
         LOG(info) << "Write error";
         close();
