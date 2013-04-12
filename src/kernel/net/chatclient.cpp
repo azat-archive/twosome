@@ -26,6 +26,7 @@ namespace Sctp = boost::asio_sctp;
 
 ChatClient::ChatClient(const Options &options, boost::asio::io_service &ioService)
     : m_options(options)
+    , m_messageBuffer(Session::MAX_BUFFER_LENGTH)
     , m_inputBuffer(Session::MAX_BUFFER_LENGTH)
     , m_input(ioService, ::dup(STDIN_FILENO))
     , m_output(ioService, ::dup(STDOUT_FILENO))
@@ -73,7 +74,8 @@ void ChatClient::connectAsyncNext(Sctp::ip::sctp::resolver_iterator iterator)
                                       PlaceHolders::_1, ++iterator));
 }
 
-void ChatClient::handleRead(const boost::system::error_code& error)
+void ChatClient::handleRead(const boost::system::error_code& error,
+                            size_t length)
 {
     LOG(info) << "ChatClient::handleRead";
     if (error) {
@@ -82,10 +84,9 @@ void ChatClient::handleRead(const boost::system::error_code& error)
         return;
     }
 
+    m_messageBuffer.sgetn(m_buffer, length);
     writeOutputPrompt();
-    std::cout << '\r' << m_buffer
-              << std::endl << std::flush;
-    writeInputPrompt();
+    std::cout << m_buffer << std::endl << std::flush;
 
     asyncRead();
 }
@@ -117,14 +118,14 @@ void ChatClient::handleWrite(const boost::system::error_code& error)
 
 void ChatClient::asyncRead()
 {
-    boost::asio::async_read(m_socket,
-                            boost::asio::buffer(m_buffer, Session::MAX_BUFFER_LENGTH),
-                            std::bind(&ChatClient::handleRead, this,
-                                      PlaceHolders::_1));
+    boost::asio::async_read_until(m_socket, m_messageBuffer, '\n',
+                                  std::bind(&ChatClient::handleRead, this,
+                                            PlaceHolders::_1, PlaceHolders::_2));
 }
 
 void ChatClient::asyncReadFromStdin()
 {
+    writeInputPrompt();
     boost::asio::async_read_until(m_input, m_inputBuffer, '\n',
                                   std::bind(&ChatClient::handleReadInput, this,
                                             PlaceHolders::_1, PlaceHolders::_2));
