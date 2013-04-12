@@ -10,6 +10,7 @@
 
 
 #include "session.h"
+#include "util/log.h"
 
 #include <boost/asio/write.hpp>
 #include <functional>
@@ -46,6 +47,7 @@ void Session::asyncRead()
 
 void Session::asyncWrite(const std::string& message)
 {
+    LOG(debug) << "Send '" << message << "'";
     Asio::async_write(m_socket,
                       Asio::buffer(message),
                       std::bind(&Session::handleWrite, shared_from_this(),
