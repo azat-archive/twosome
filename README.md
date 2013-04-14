@@ -6,7 +6,7 @@ Chat over SCTP
 
 Used libraries
 ---------------
-- boost::program_options
+- boost::program_options - http://www.boost.org/doc/libs/1_53_0/doc/html/program_options.html
 - boost::asio_sctp - http://code.halssoftware.com/p/boostasiosctp
 
 See also
