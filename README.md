@@ -11,7 +11,7 @@ Used libraries
 
 - [boost tcp asio](http://www.boost.org/libs/intrusive)
 - [boost::asio_sctp](http://code.halssoftware.com/p/boostasiosctp)
-  - [with some minor patches](/azat/boostasiosctp)
+  - [with some minor patches](/azat/boostasiosctp/)
 - [cmake for builds](http://cmake.org/)
 - [boost log (proposal)](http://boost-log.sourceforge.net/)
 
