@@ -12,6 +12,7 @@ before_script:
     - bash --version
     - expect -v
     - ls -1 /proc/sys/net/sctp
+    - uname -a
 
 script:
     - mkdir .cmake
