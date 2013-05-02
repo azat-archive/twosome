@@ -19,3 +19,24 @@ See also
 ----------
 
 - Based on [boost_asio chat example](http://www.boost.org/doc/libs/1_45_0/doc/html/boost_asio/example/chat)
+
+Building
+========
+
+Please look at [.travis.yml](.travis.yml) for this,
+but in short you can run next commands on debian like distribution:
+
+```shell
+sudo add-apt-repository -y ppa:azat/boost-unofficial
+sudo apt-get update
+sudo apt-get install libboost1.53-all-dev libsctp-dev
+
+mkdir .cmake
+cd .cmake
+cmake ..
+make
+
+./twosomed &
+./twosome
+Go ahead!
+```
