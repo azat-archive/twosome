@@ -2,8 +2,6 @@
 Chat over SCTP
 ==============
 
-[![Build Status](https://travis-ci.org/azat/twosome.png)](https://travis-ci.org/azat/twosome)
-
 - For more comfortable using of chat client see [rlwrap](http://linux.die.net/man/1/rlwrap) util.
 
 Used libraries
