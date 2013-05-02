@@ -17,7 +17,7 @@ script:
     - cd .cmake
     - cmake ..
     - make
-    - ./twosomed &>/dev/null &
+    - ./twosomed &
     - sleep 2
     - ../scripts/test-chat ./twosome
 
