@@ -11,6 +11,7 @@ before_script:
     # Version of some utils
     - bash --version
     - expect -v
+    - ls -1 /proc/sys/net/sctp
 
 script:
     - mkdir .cmake
