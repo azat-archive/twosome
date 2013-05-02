@@ -1,0 +1,34 @@
+#!/usr/bin/env expect
+
+set timeout 1
+
+#
+# For this test server must be already running.
+#
+
+# Spawn client chat
+spawn $argv
+
+expect {
+    "<" {
+        send "Test message\n"
+        expect {
+            "> Test message" {
+                puts "Succesfully read message"
+                exit 0
+            }
+            timeout {
+                puts "Can't read sended message"
+                exit 1
+            }
+        }
+    }
+    timeout {
+        puts "Can't read prompt"
+        exit 1
+    }
+    eof {
+        puts "Can't read prompt"
+        exit 1
+    }
+}
