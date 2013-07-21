@@ -11,7 +11,7 @@ Used libraries
 - [boost::asio_sctp](http://code.halssoftware.com/p/boostasiosctp)
   - [with some minor patches](https://github.com/azat/boostasiosctp)
 - [cmake for builds](http://cmake.org/)
-- [boost log (proposal)](http://boost-log.sourceforge.net/)
+- [boost log](http://www.boost.org/libs/log)
 
 See also
 ----------
@@ -25,9 +25,7 @@ Please look at [.travis.yml](.travis.yml) for this,
 but in short you can run next commands on debian like distribution:
 
 ```shell
-sudo add-apt-repository -y ppa:azat/boost-unofficial
-sudo apt-get update
-sudo apt-get install libboost1.53-all-dev libsctp-dev
+sudo apt-get install libboost1.54-all-dev
 
 mkdir .cmake
 cd .cmake
